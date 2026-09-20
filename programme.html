@@ -139,7 +139,17 @@
   .empty{text-align:center;color:var(--muted);padding:60px 20px}
   .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:30px}
   kbd{background:var(--chip);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:1px 6px;font-size:11px}
+  /* A tall header + position:sticky pins it over the whole page, making
+     content below unreachable. On narrow or short viewports let it scroll away. */
+  @media(max-width:760px),(max-height:620px){
+    header{position:static}
+  }
   @media(max-width:640px){
+    h1{font-size:16px}
+    header{padding:10px 14px 10px}
+    .chip{padding:4px 9px;font-size:12.5px}
+    .flabel{font-size:10.5px}
+    main{padding:14px 14px 80px}
     .flabel{min-width:100%;margin-bottom:-2px}
     .paper{padding-left:14px}
     .ptime{min-width:46px}

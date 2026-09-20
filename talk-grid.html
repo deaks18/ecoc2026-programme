@@ -234,7 +234,16 @@
     border:1px solid var(--line);border-radius:8px;font-size:12.5px;line-height:1.55;color:#c3d0de}
   .absbox.show{display:block}
 
+  /* A tall header + position:sticky pins it over the whole page, making
+     content below unreachable. On narrow or short viewports let it scroll away. */
+  @media(max-width:760px),(max-height:620px){
+    header{position:static}
+  }
   @media(max-width:640px){
+    h1{font-size:16px}
+    header{padding:10px 12px 10px}
+    .chip{padding:4px 9px;font-size:12.5px}
+    .flabel{font-size:10.5px}
     .flabel{min-width:100%;margin-bottom:-2px}
     main{padding:12px 10px 80px}
   }
