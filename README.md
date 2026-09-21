@@ -12,7 +12,7 @@ no network needed once loaded:
 | `talk-grid.html` | Room x time grid, one block per talk |
 | `sessions-grid.html` | Room x time grid, one block per session |
 
-Data scraped 2026-09-18 from the [official programme](https://ecoc2026.org/site/programme/?a=ecoc2026).
+Data scraped 2026-09-21 from the [official programme](https://ecoc2026.org/site/programme/?a=ecoc2026).
 Paper PDFs are not included here; the PDF links point back to the official site.
 
 Pages carry `noindex` and the site ships a `robots.txt` disallowing crawlers.
