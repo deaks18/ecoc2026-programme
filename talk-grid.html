@@ -385,6 +385,13 @@
   });
   function tokenize(q){return q.toLowerCase().split(/\s+/).filter(Boolean);}
   function matchAll(hay,toks){return toks.every(function(t){return hay.indexOf(t)>=0;});}
+  // Session descriptions use tab characters as line separators. HTML collapses
+  // them to single spaces, which turns long descriptions (the Hack Your
+  // Research programme is 9k chars) into one unbroken block. Convert runs of
+  // tabs into real line breaks, after highlighting so <mark> is preserved.
+  function descHTML(text,toks){
+    return hl(text,toks).replace(/	+/g,'<br>');
+  }
   function hl(text,toks){
     var out=esc(text);
     if(!toks || !toks.length) return out;
@@ -764,7 +771,7 @@
       +(s.category?'<span>'+esc(s.category)+'</span>':'')
       +'</div></div>'
       +'<div class="dbody">'
-      +(s.description?'<div class="ddesc">'+hl(s.description,toks)+'</div>':'')
+      +(s.description?'<div class="ddesc">'+descHTML(s.description,toks)+'</div>':'')
       +(chairs?'<div class="mods">'+chairs+'</div>':'')
       +(rest.length?rest.map(function(p){return paperHTML(p,toks,aid);}).join('')
                    :'<div class="empty" style="padding:30px 0">No presentations listed.</div>')

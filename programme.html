@@ -98,6 +98,8 @@
 
   .papers{display:none;border-top:1px solid var(--line)}
   .session.open .papers{display:block}
+  .sdesc{padding:12px 14px;color:#c3d0de;font-size:13.5px;line-height:1.55;
+    border-bottom:1px solid var(--line)}
   /* chairs / organizers: one line per role, not one row per person */
   .mods{padding:10px 14px 10px 22px;border-bottom:1px solid #202b3a}
   .modrow{display:flex;gap:9px;align-items:baseline;margin-bottom:5px}
@@ -298,6 +300,13 @@
   function esc(s){return (s||'').replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 
   function tokenize(q){return q.toLowerCase().split(/\s+/).filter(Boolean);}
+  // Session descriptions use tab characters as line separators. HTML collapses
+  // them to single spaces, which turns long descriptions (the Hack Your
+  // Research programme is 9k chars) into one unbroken block. Convert runs of
+  // tabs into real line breaks, after highlighting so <mark> is preserved.
+  function descHTML(text,toks){
+    return hl(text,toks).replace(/	+/g,'<br>');
+  }
   function hl(text,toks){
     var out=esc(text);
     if(!toks.length) return out;
@@ -395,8 +404,9 @@
     var color=displayColor(s);
     var typebadge=s.type?'<span class="stype" style="background:'+color+'">'+esc(displayType(s.type))+'</span>':'';
     var cat=s.category?'<div class="scat">'+hl(s.category,toks)+'</div>':'';
-    var open=(state.expandAll||state.q||rest.length<=12)&&(rest.length>0||!!chairs);
-    var body=(chairs?'<div class="mods">'+chairs+'</div>':'')
+    var open=(state.expandAll||state.q||rest.length<=12)&&(rest.length>0||!!chairs||!!s.description);
+    var body=(s.description?'<div class="sdesc">'+descHTML(s.description,toks)+'</div>':'')
+      +(chairs?'<div class="mods">'+chairs+'</div>':'')
       +rest.map(function(p){return paperHTML(p,toks);}).join('');
     return '<div class="session'+(open?' open':'')+'" style="border-left-color:'+color+'">'
       +'<div class="shead" style="border-left-color:'+color+'">'
